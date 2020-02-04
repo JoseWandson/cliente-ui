@@ -1,0 +1,35 @@
+<div class="container" style="max-width: 400px; margin: auto">
+    <form autocomplete="off" (ngSubmit)="salvar(); senha.value = '';" [formGroup]="formulario">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+                <h1>Novo Usuário</h1>
+            </div>
+
+            <div class="ui-g-12">
+                <label>Nome</label>
+                <input pInputText type="text" name="nome" formControlName="nome">
+
+                <app-message [control]="formulario.get('nome')" error="required" text="Informe o nome"></app-message>
+            </div>
+
+            <div class="ui-g-12">
+                <label>E-mail</label>
+                <input pInputText type="email" name="email" formControlName="email">
+
+                <app-message [control]="formulario.get('email')" error="required" text="Informe o e-mail">
+                </app-message>
+            </div>
+
+            <div class="ui-g-12">
+                <label>Senha</label>
+                <input type="password" pPassword name="senha" formControlName="senha" #senha />
+
+                <app-message [control]="formulario.get('senha')" error="required" text="Informe a senha"></app-message>
+            </div>
+
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Salvar" [disabled]="formulario.invalid"></button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,70 @@
+<div class="container">
+    <form autocomplete="off" (ngSubmit)="salvar()" [formGroup]="formulario">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h1>{{ editando ? 'Edição de' : 'Novo' }} Cliente</h1>
+            </div>
+
+            <div class="ui-g-12 ui-fluid">
+                <label>Nome</label>
+                <input pInputText type="text" name="nome" formControlName="nome">
+
+                <app-message [control]="formulario.get('nome')" error="required" text="Informe o nome"></app-message>
+            </div>
+
+            <div class="ui-g-9 ui-md-3 ui-fluid">
+                <label>Telefone</label>
+                <p-inputMask name="telefone" formControlName="telefone" mask="(99) 99999-999?9"></p-inputMask>
+
+                <app-message [control]="formulario.get('telefone')" error="required" text="Informe o telefone">
+                </app-message>
+            </div>
+
+            <div class="ui-g-12 ui-md-3 ui-fluid" formGroupName="endereco">
+                <label>CEP</label>
+                <p-inputMask name="cep" formControlName="cep" mask="99999-999" (onBlur)="carregarEndereco()">
+                </p-inputMask>
+
+                <app-message [control]="formulario.get('cep')" error="required" text="Informe o CEP"></app-message>
+            </div>
+
+            <div class="ui-g-12 ui-md-9 ui-fluid" formGroupName="endereco">
+                <label>Logradouro</label>
+                <input pInputText type="text" name="logradouro" formControlName="logradouro">
+            </div>
+
+            <div class="ui-g-12 ui-md-3 ui-fluid" formGroupName="endereco">
+                <label>Número</label>
+                <input pInputText type="text" name="numero" formControlName="numero">
+
+                <app-message [control]="formulario.get('numero')" error="required" text="Informe o Número">
+                </app-message>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-fluid" formGroupName="endereco">
+                <label>Cidade</label>
+                <input pInputText type="text" name="cidade" formControlName="cidade">
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-fluid" formGroupName="endereco">
+                <label>Estado</label>
+                <input pInputText type="text" name="estado" formControlName="estado">
+            </div>
+
+            <div class="ui-g-12 ui-md-3 ui-fluid" formGroupName="endereco">
+                <label>País</label>
+                <input pInputText type="text" name="pais" formControlName="pais">
+            </div>
+
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Salvar" [disabled]="formulario.invalid"></button>
+                <button pButton type="button" label="Novo" class="ui-button-info" (click)="novo()"></button>
+                <a routerLink="/clientes">Voltar para os Clientes</a>
+            </div>
+        </div>
+
+        <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng" *ngIf="formulario.get('endereco').valid">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        </agm-map>
+    </form>
+</div>

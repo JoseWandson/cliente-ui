@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { GrowlModule } from 'primeng/growl';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -28,13 +28,13 @@ import { UsuarioService } from '../usuario/usuario.service';
     RouterModule,
     HttpClientModule,
 
-    GrowlModule,
+    ToastModule,
     ConfirmDialogModule
   ],
   exports: [
     NavbarComponent,
 
-    GrowlModule,
+    ToastModule,
     ConfirmDialogModule
   ],
   providers: [

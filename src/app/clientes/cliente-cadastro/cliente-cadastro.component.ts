@@ -19,7 +19,7 @@ export class ClienteCadastroComponent implements OnInit {
   formulario: FormGroup;
   lat: number;
   lng: number;
-  zoom: number = 15;
+  zoom = 15;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +35,7 @@ export class ClienteCadastroComponent implements OnInit {
   ngOnInit() {
     this.configurarFormulario();
 
-    const idCliente = this.route.snapshot.params['id'];
+    const idCliente = this.route.snapshot.params.id;
     if (idCliente) {
       this.carregarCliente(idCliente);
     }
@@ -89,7 +89,10 @@ export class ClienteCadastroComponent implements OnInit {
 
   carregarCliente(id: number) {
     this.clienteService.buscar(id)
-      .then(cliente => this.formulario.patchValue(cliente))
+      .then(cliente => {
+        this.formulario.patchValue(cliente);
+        this.converterEnderecoEmCoordenadas();
+      })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
@@ -99,17 +102,19 @@ export class ClienteCadastroComponent implements OnInit {
   }
 
   carregarEndereco() {
-    if (this.formulario.get('endereco.cep').value && this.formulario.get('endereco.cep').value.length === 9) {
+    if (this.formulario.get('endereco.cep').value && this.formulario.get('endereco.cep').value.replace(/\D/gim, '').length === 8) {
       this.cepService.buscar(this.formulario.get('endereco.cep').value)
         .then(endereco => {
           this.formulario.get('endereco').patchValue({
             logradouro: endereco.logradouro,
             cidade: endereco.localidade,
             estado: endereco.uf
-          })
+          });
+          this.converterEnderecoEmCoordenadas();
         })
-        .catch(erro => this.errorHandler.handle(erro));
-      this.converterEnderecoEmCoordenadas();
+        .catch(erro => {
+          this.errorHandler.handle(erro);
+        });
     }
   }
 
@@ -117,9 +122,9 @@ export class ClienteCadastroComponent implements OnInit {
     this.mapsService.converterEnderecoEmCoordenadas(this.formulario.get('endereco.cep').value)
       .then(coordenada => {
         this.lat = coordenada.lat;
-        this.lng = coordenada.lng
+        this.lng = coordenada.lng;
       })
-      .catch(erro => this.errorHandler.handle(erro));;
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
 }

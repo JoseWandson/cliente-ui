@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ConfirmationService, MessageService } from 'primeng-lts/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { Cliente } from 'src/app/core/model';
 import { ClienteService } from '../cliente.service';

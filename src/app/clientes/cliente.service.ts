@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
 import { Cliente } from '../core/model';
 import { environment } from 'src/environments/environment';
+import { ClienteHttp } from '../seguranca/cliente-http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +11,16 @@ export class ClienteService {
 
   url: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: ClienteHttp) {
     this.url = `${environment.apiUrl}/clientes`;
   }
 
   listar(): Promise<Cliente[]> {
     return this.http.get<Cliente[]>(this.url)
-    .toPromise()
-    .then(response => {
-      return response;
-    });
+      .toPromise()
+      .then(response => {
+        return response;
+      });
   }
 
   excluir(id: number): Promise<void> {
